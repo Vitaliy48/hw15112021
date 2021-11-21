@@ -1,41 +1,35 @@
 public class HomeWorkApp {
     public static void main(String[] args) {
-        printThreeWords();
-        checkSumSign ();
-        printColor ();
-        compareNumbers ();
+        System.out.println(checkingNumbers(5, 20));
+        positiveNumberOrNegative(5);
+        System.out.println(checkingNumber(5));
+        WordNumber("Java",5);
+        System.out.print(leapYear(2015));
     }
-    public static void printThreeWords() {
-        System.out.println("Orange");
-        System.out.println("Banana");
-        System.out.println("Apple");
+    public static boolean checkingNumbers(int a, int b) {
+        return (a + b >= 10 && a + b <= 20);
     }
-    public  static  void  checkSumSign () {
-        int a =  15 , b =  25 , c = a + b;
-        if (c >=  0 ) {
-            System.out.println ( "Сумма положительная" );
+    public static void positiveNumberOrNegative(int a) {
+        if (a >= 0) {
+            System.out.println("положительное");
         } else {
-            System.out.println ( "Сумма отрицательная" );
+            System.out.println("отрицательное");
         }
     }
-    public  static  void  printColor () {
-        int value = 98 ;
-        if (value <=  0 ) {
-            System.out.println ("Красный");
+    public static boolean checkingNumber(int a) {
+        if (a<0) {
+           return true;
         }
-        if (value >  0  && value <= 100 ) {
-            System.out.println ("Желтый");
+           return false;
         }
-        if (value >  100 ) {
-            System.out.println ("Зеленый");
+    public static void WordNumber(String string, int a) {
+        for (int j = 0; j < a; j++) {
+            System.out.print(string + " ");
         }
+        System.out.println();
     }
-    public  static  void  compareNumbers () {
-        int a = 36, b = 12;
-        if (a >= b) {
-            System.out.println("a>=b");
-        } else {
-            System.out.println("a<b");
-        }
+    public static boolean leapYear(int a) {
+        return ((a % 100 != 0) && (a % 4 == 0) && (a % 400 == 0));
     }
+
 }
