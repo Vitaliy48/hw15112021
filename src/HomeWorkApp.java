@@ -1,35 +1,62 @@
+import java.util.Arrays;
+
 public class HomeWorkApp {
     public static void main(String[] args) {
-        System.out.println(checkingNumbers(5, 20));
-        positiveNumberOrNegative(5);
-        System.out.println(checkingNumber(5));
-        WordNumber("Java",5);
-        System.out.print(leapYear(2015));
-    }
-    public static boolean checkingNumbers(int a, int b) {
-        return (a + b >= 10 && a + b <= 20);
-    }
-    public static void positiveNumberOrNegative(int a) {
-        if (a >= 0) {
-            System.out.println("положительное");
-        } else {
-            System.out.println("отрицательное");
-        }
-    }
-    public static boolean checkingNumber(int a) {
-        if (a<0) {
-           return true;
-        }
-           return false;
-        }
-    public static void WordNumber(String string, int a) {
-        for (int j = 0; j < a; j++) {
-            System.out.print(string + " ");
+
+
+        int[] arrs = new int[]{1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
+        for (int i = 0; i < arrs.length; i++) {
+            if (arrs[i] == 0) {
+                arrs[i] = 1;
+            } else {
+                arrs[i] = 0;
+            }
+            System.out.print(arrs[i] + "  ");
         }
         System.out.println();
-    }
-    public static boolean leapYear(int a) {
-        return ((a % 100 != 0) && (a % 4 == 0) && (a % 400 == 0));
-    }
 
+
+        int[] arrs2 = new int[100];
+        for (int i = 0; i < arrs2.length; i++) {
+            arrs2[i] = i;
+            System.out.print(arrs2[i] + "  ");
+        }
+        System.out.println();
+
+
+        int[] arrs3 = new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+        for (int i = 0; i < arrs3.length; i++) {
+            if (arrs3[i] < 6) {
+                arrs3[i] *= 2;
+            }
+            System.out.print(arrs3[i] + "  ");
+        }
+        System.out.println();
+
+        int[][] arrs4 = new int[3][3];
+        for (int i = 0; i < arrs4.length; i++) {
+            for (int j = 0; j < arrs4[i].length; j++) {
+                if (i == j) {
+                    arrs4[i][j] = 1;
+                }
+                if (i + j == arrs4.length - 1) {
+                    arrs4[i][j] = 1;
+                }
+                System.out.printf(" % 2d ", arrs4[i][j]);
+            }
+            System.out.println();
+        }
+
+        public static int[] arrs5 ( int len, int initialValue){  // не могу понять где у меня тут ошибка,подскуажите пожалуста!
+            int[] arrs5 = new int[len];
+            for (int i = 0; i < arrs5.length; i++) {
+                arrs5[i] = initialValue;
+            }
+            return arrs5;
+        }
+    }
 }
+
+
+
+
