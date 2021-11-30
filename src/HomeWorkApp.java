@@ -1,62 +1,156 @@
-import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class HomeWorkApp {
+
+    static final int SIZE = 3;
+    static final int DOTS_TO_WIN = 3;
+
+    static final char DOT_X = 'X';
+    static final char DOT_O = 'O';
+    static final char DOT_EMPTY = '.';
+
+    static char[][] map;
+
+    static Scanner sc = new Scanner(System.in);
+    static Random random = new Random();
+
     public static void main(String[] args) {
+        initMap();
+        printMap();
 
-
-        int[] arrs = new int[]{1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
-        for (int i = 0; i < arrs.length; i++) {
-            if (arrs[i] == 0) {
-                arrs[i] = 1;
-            } else {
-                arrs[i] = 0;
+        while (true) {
+            humanTurn();
+            if (checkWin(DOT_X)) {
+                System.out.println("Поздравляем! Вы выиграли!");
+                break;
             }
-            System.out.print(arrs[i] + "  ");
-        }
-        System.out.println();
-
-
-        int[] arrs2 = new int[100];
-        for (int i = 0; i < arrs2.length; i++) {
-            arrs2[i] = i;
-            System.out.print(arrs2[i] + "  ");
-        }
-        System.out.println();
-
-
-        int[] arrs3 = new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
-        for (int i = 0; i < arrs3.length; i++) {
-            if (arrs3[i] < 6) {
-                arrs3[i] *= 2;
+            printMap();
+            if (isFull()) {
+                System.out.println("Ничья");
+                break;
             }
-            System.out.print(arrs3[i] + "  ");
-        }
-        System.out.println();
 
-        int[][] arrs4 = new int[3][3];
-        for (int i = 0; i < arrs4.length; i++) {
-            for (int j = 0; j < arrs4[i].length; j++) {
-                if (i == j) {
-                    arrs4[i][j] = 1;
-                }
-                if (i + j == arrs4.length - 1) {
-                    arrs4[i][j] = 1;
-                }
-                System.out.printf(" % 2d ", arrs4[i][j]);
+            aiTurn();
+            if (checkWin(DOT_O)) {
+                System.out.println("Компьютер победил");
+                break;
             }
-            System.out.println();
-        }
-
-        public static int[] arrs5 ( int len, int initialValue){  // не могу понять где у меня тут ошибка,подскуажите пожалуста!
-            int[] arrs5 = new int[len];
-            for (int i = 0; i < arrs5.length; i++) {
-                arrs5[i] = initialValue;
+            printMap();
+            if (isFull()) {
+                System.out.println("Ничья");
+                break;
             }
-            return arrs5;
         }
     }
-}
 
+    public static void initMap() {
+        map = new char[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                map[i][j] = DOT_EMPTY;
+            }
+        }
+    }
+
+    public static void printMap() {
+        System.out.print("  ");
+        for (int i = 1; i <= SIZE; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < SIZE; i++) {
+            System.out.print(i + 1 + " ");
+            for (int j = 0; j < SIZE; j++) {
+                System.out.printf("%c ", map[i][j]);
+            }
+            System.out.println();
+
+        }
+    }
+
+    public static void humanTurn() {
+        int x, y;
+        do {
+            System.out.println("input X,Y");
+            y = sc.nextInt() - 1;
+            x = sc.nextInt() - 1;
+        } while (!isCellValid(y, x));
+        map[y][x] = DOT_X;
+    }
+
+    private static boolean isCellValid(int y, int x) {
+        if (y < 0 || x < 0 || y >= SIZE || x >= SIZE) {
+            return false;
+        }
+        return map[y][x] == DOT_EMPTY;
+    }
+
+    public static void aiTurn() {
+        int x, y;
+        do {
+            y = random.nextInt(SIZE);
+            x = random.nextInt(SIZE);
+        } while (!isCellValid(y, x));
+        map[y][x] = DOT_O;
+    }
+
+    public static boolean isFull() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == DOT_EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /*public static boolean checkWin(char c) {
+        if (map [0][0] == c && map [0][1] == c && map [0][2] == c) {return true;}
+        if (map [1][0] == c && map [1][1] == c && map [1][2] == c) {return true;}
+        if (map [2][0] == c && map [2][1] == c && map [2][2] == c) {return true;}
+
+        if (map [0][0] == c && map [1][0] == c && map [2][0] == c) {return true;}
+        if (map [0][1] == c && map [1][1] == c && map [2][1] == c) {return true;}
+        if (map [0][2] == c && map [1][2] == c && map [2][2] == c) {return true;}
+
+        if (map [0][0] == c && map [1][1] == c && map [2][2] == c) {return true;}
+        if (map [0][2] == c && map [1][1] == c && map [2][0] == c) {return true;}
+
+        return false;
+    }*/
+
+    public static boolean checkLine(int y, int x, int dy, int dx,char c) {
+        if (x + dx * (DOTS_TO_WIN -  1 ) > SIZE -  1  ||
+                y + dy * (DOTS_TO_WIN -  1 ) > SIZE -  1  ||
+                y + dy * (DOTS_TO_WIN -  1 ) <  0 ) {
+            return false;
+        }
+
+        for (int i = 0; i < DOTS_TO_WIN; i++) {
+            if (map[y + i * dy][x + i * dx] != c)
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean checkWin(char c) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (checkLine(i, j, 0, 1, c))
+                    return true;
+                if (checkLine(i, j, 1, 0, c))
+                    return true;
+                if (checkLine(i, j, 1, 1, c))
+                    return true;
+                if (checkLine(i, j, -1, 1, c))
+                    return true;
+            }
+        }
+        return false;
+    }
+}
 
 
 
